@@ -1,29 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Final Project Monika & Kadri</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
-    <div class="header">
+      <div class="header">
         <h1>Memory Game</h1>
-    </div> 
-<div class="status">
-    <div class="status-label">Moves:</div>
-    <div class="status-value">0</div>
-</div>
-<div class="status">
-<div class="status-label">Time:</div>
-<div class="status-value">0:00</div>
-</div>
-<div class="game-board" id="gameBoard"></div>
-</div>
+      </div>
+      <div class="status">
+        <div class="status-label">Moves:</div>
+        <div class="status-value">0</div>
+      </div>
+      <div class="status">
+        <div class="status-label">Time:</div>
+        <div class="status-value">0:00</div>
+      </div>
+      <div class="game-board" id="gameBoard">
+        <div class="card">
+          <div class="front">?</div>
+          <!--Example card for now. Later some img.-->
+          <div class="back">A</div>
+          <!--Example card for now. Later some img.-->
+        </div>
+      </div>
 
+      <div class="controls">
+        <button class="button" onclick="newGame()">New Game</button>
+        <button class="button" onclick="tryAgain()">Try Again</button>
+      </div>
+      <div class="modal" id="winModal">
+        <div class="modal-content">
+          <h2>Congratulations!</h2>
+          <h3>You win!</h3>
+          <p>Moves: <span id="finalMoves">0</span></p>
+          <p>Time: <span id="finalTime">0:00</span></p>
+
+          <button class="button" onclick="closeModal()">X</button>
+        </div>
+      </div>
+    </div>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>
