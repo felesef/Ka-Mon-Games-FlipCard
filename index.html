@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Final Project Monika & Kadri</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="./style.css" />
   </head>
 
@@ -15,17 +18,16 @@
       </div>
       <div class="status">
         <div class="status-label">Moves:</div>
-        <div class="status-value">0</div>
+        <div class="status-value" id="movesCounter"></div>
       </div>
       <div class="status">
         <div class="status-label">Time:</div>
-        <div class="status-value">0:00</div>
+        <div class="status-value" id="timeCounter"></div>
       </div>
       <div class="game-board" id="gameBoard"></div>
 
       <div class="controls">
         <button class="button" onclick="newGame()">New Game</button>
-        <button class="button" onclick="tryAgain()">Try Again</button>
       </div>
       <div class="modal" id="winModal">
         <div class="modal-content">
