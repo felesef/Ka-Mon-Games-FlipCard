@@ -1,0 +1,225 @@
+openapi: 3.0.3
+info:
+  title: Ka-Mon Memory Game API
+  description: Backend API for the Memory Game (cards and scores).
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local development (UI at /, API at /api/...)
+
+paths:
+  /api/cards:
+    get:
+      summary: Get cards by theme
+      description: Returns a list of cards for the given theme, limited by pair count (for memory game pairs).
+      operationId: getCards
+      parameters:
+        - name: theme
+          in: query
+          description: Card theme. Must be one of dogs, animals, flags, food, plants.
+          required: false
+          schema:
+            type: string
+            enum: [dogs, animals, flags, food, plants]
+            default: dogs
+        - name: pairCount
+          in: query
+          description: Number of card pairs to return (1–100).
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 8
+      responses:
+        '200':
+          description: List of cards
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
+        '400':
+          description: Invalid theme (must be one of dogs, animals, flags, food, plants)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: { type: string }
+                  allowed: { type: array, items: { type: string } }
+
+  /api/score:
+    post:
+      summary: Store a score
+      description: Saves a player score. Date/time is set by the API.
+      operationId: postScore
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScoreInput'
+      responses:
+        '201':
+          description: Score created; returns the created row (use id for PUT /api/score)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScoreResponse'
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Update a score by id
+      description: Updates the score for the given score id (returned by POST /api/score or GET /api/scores). Date/time is set by the API. Returns 404 if id not found.
+      operationId: putScore
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScoreUpdateInput'
+      responses:
+        '200':
+          description: Score updated; returns the latest row from DB
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScoreResponse'
+        '400':
+          description: Invalid request body (id and score required; id must be positive integer)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Score not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/scores:
+    get:
+      summary: Get score leaderboard
+      description: Returns scores sorted by score descending, 25 per page, with global rank.
+      operationId: getScores
+      parameters:
+        - name: page
+          in: query
+          description: Page number (1-based).
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        '200':
+          description: Page of scores with rank and dateTime
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ScoreEntry'
+
+components:
+  schemas:
+    Card:
+      type: object
+      required: [id, theme, name, url]
+      properties:
+        id:
+          type: integer
+          example: 1
+        theme:
+          type: string
+          example: dogs
+        name:
+          type: string
+          example: terrier-sealyham
+        url:
+          type: string
+          format: uri
+          example: https://images.dog.ceo/breeds/terrier-sealyham/n02095889_975.jpg
+
+    ScoreInput:
+      type: object
+      required: [playerName, score]
+      properties:
+        playerName:
+          type: string
+          example: name
+        score:
+          type: number
+          example: 232
+
+    ScoreResponse:
+      type: object
+      description: Created score (returned by POST /api/score)
+      required: [id, playerName, score, dateTime]
+      properties:
+        id:
+          type: integer
+          description: Score row id (use for PUT /api/score)
+          example: 1
+        playerName:
+          type: string
+          example: name
+        score:
+          type: number
+          example: 232
+        dateTime:
+          type: string
+          format: date-time
+          example: "2025-03-15T13:45:30.000Z"
+
+    ScoreUpdateInput:
+      type: object
+      required: [id, score]
+      properties:
+        id:
+          type: integer
+          description: Score id (from POST response or GET /api/scores)
+          example: 1
+        score:
+          type: number
+          example: 500
+
+    ScoreEntry:
+      type: object
+      required: [id, playerName, score, rank, dateTime]
+      properties:
+        id:
+          type: integer
+          description: Score row id (use for PUT /api/score)
+          example: 1
+        playerName:
+          type: string
+          example: name3
+        score:
+          type: number
+          example: 8329
+        rank:
+          type: integer
+          description: Global 1-based rank (e.g. 1–25 on page 1)
+          example: 1
+        dateTime:
+          type: string
+          format: date-time
+          description: When the score was stored (ISO 8601)
+          example: "2025-03-15T13:45:30.000Z"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "playerName (string) and score (number) required"

@@ -1,0 +1,23 @@
+{
+  "name": "memory-game-be",
+  "version": "1.0.0",
+  "description": "Backend API for Memory Game (cards & scores)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^11.6.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "create-db": "node scripts/create-db.js"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "ka-mon-games-flipcard",
+  "private": true,
+  "scripts": {
+    "start": "cd be && npm start",
+    "dev": "cd be && npm start"
+  }
+}
