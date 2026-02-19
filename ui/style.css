@@ -39,10 +39,62 @@ body {
   margin: 0;
 }
 
-.status {
+.setup-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: #e8e0f0;
+  border-radius: 16px;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+.setup-container label {
+  font-weight: bold;
+  color: #080547;
+}
+
+.setup-container input,
+.setup-container select {
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #532ec1;
+}
+
+.button-primary {
+  margin-top: 8px;
+}
+
+.game-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.stats-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 20px;
+  background: #532ec1;
+  border-radius: 16px;
+}
+
+.stats-container .status-label,
+.stats-container .status-value {
+  color: #fff;
+  background: transparent;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .status-value,
@@ -128,6 +180,8 @@ body {
 }
 
 .controls {
+  display: flex;
+  gap: 12px;
   margin-top: 8px;
 }
 
@@ -165,4 +219,41 @@ body {
   border-radius: 12px;
   text-align: center;
   min-width: 280px;
+}
+
+.modal-content .scoreboard-hint {
+  margin-top: 12px;
+  font-style: italic;
+  color: #333;
+}
+
+.modal-scoreboard {
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.modal-scoreboard h2 {
+  margin-bottom: 16px;
+}
+
+#scoreboardList {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+#scoreboardList .score-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px;
+  margin: 4px 0;
+  background: #f5e6e6;
+  border-radius: 8px;
+}
+
+#scoreboardList .score-row-header {
+  font-weight: bold;
+  background: #e8d0d0;
 }

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "cd be && npm start",
-    "dev": "cd be && npm start"
+    "dev": "cd be && npm start",
+    "create-db": "cd be && npm run create-db"
   }
 }
