@@ -1,0 +1,57 @@
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #9684ccaa;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #e8bcbc;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 280px;
+}
+
+.modal-content .scoreboard-hint {
+  margin-top: 12px;
+  font-style: italic;
+  color: #333;
+}
+
+.modal-scoreboard {
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.modal-scoreboard h2 {
+  margin-bottom: 16px;
+}
+
+#scoreboardList {
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+#scoreboardList .score-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px;
+  margin: 4px 0;
+  background: #f5e6e6;
+  border-radius: 8px;
+}
+
+#scoreboardList .score-row-header {
+  font-weight: bold;
+  background: #e8d0d0;
+}

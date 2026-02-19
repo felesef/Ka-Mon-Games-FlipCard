@@ -1,0 +1,27 @@
+.setup-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: #e8e0f0;
+  border-radius: 16px;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+.setup-container label {
+  font-weight: bold;
+  color: #080547;
+}
+
+.setup-container input,
+.setup-container select {
+  padding: 10px 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #532ec1;
+}
+
+.button-primary {
+  margin-top: 8px;
+}

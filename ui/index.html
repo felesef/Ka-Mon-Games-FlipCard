@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
   </head>
 
   <body>
@@ -58,8 +58,8 @@
         <div class="game-board" id="gameBoard"></div>
 
         <div class="controls">
-          <button type="button" class="button" onclick="newGame()">New Game</button>
-          <button type="button" class="button" onclick="openScoreboard()">Scoreboard</button>
+          <button type="button" class="button" id="newGameBtn" onclick="typeof newGame==='function'&&newGame()">New Game</button>
+          <button type="button" class="button" id="scoreboardBtn" onclick="typeof openScoreboard==='function'&&openScoreboard()">Scoreboard</button>
         </div>
       </div>
     </div>
@@ -72,7 +72,7 @@
         <p>Time: <span id="finalTime">0:00</span></p>
         <p>Score: <span id="finalScore">0</span></p>
         <p class="scoreboard-hint">Check the scoreboard for your rank.</p>
-        <button type="button" class="button" onclick="closeModal()">X</button>
+        <button type="button" class="button" id="closeWinModalBtn" onclick="typeof closeModal==='function'&&closeModal()">X</button>
       </div>
     </div>
 
@@ -80,10 +80,20 @@
       <div class="modal-content modal-scoreboard">
         <h2>Scoreboard</h2>
         <div id="scoreboardList"></div>
-        <button type="button" class="button" onclick="closeScoreboard()">Close</button>
+        <button type="button" class="button" id="closeScoreboardBtn" onclick="typeof closeScoreboard==='function'&&closeScoreboard()">Close</button>
       </div>
     </div>
 
-    <script src="./script.js"></script>
+    <script type="module" src="./js/main.js"></script>
+    <script>
+      setTimeout(function () {
+        if (typeof newGame !== "function") {
+          var el = document.createElement("p");
+          el.style.cssText = "background:#c00;color:#fff;padding:12px;text-align:center;margin:0;";
+          el.textContent = "App failed to load. Open from http://localhost:3000 (run npm start in project root).";
+          document.body.insertBefore(el, document.body.firstChild);
+        }
+      }, 3000);
+    </script>
   </body>
 </html>

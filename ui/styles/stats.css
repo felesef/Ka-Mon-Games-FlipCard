@@ -1,0 +1,31 @@
+.stats-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 20px;
+  background: #532ec1;
+  border-radius: 16px;
+}
+
+.stats-container .status-label,
+.stats-container .status-value {
+  color: #fff;
+  background: transparent;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-value,
+.status-label {
+  font-size: 18px;
+  color: #080547;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #532ec1;
+  border-radius: 25px;
+}
