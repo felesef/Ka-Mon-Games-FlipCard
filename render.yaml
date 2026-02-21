@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: ka-mon-flipcard-api
+    runtime: node
+    rootDir: be
+    buildCommand: npm install && npm run create-db
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
