@@ -22,6 +22,9 @@ const knexInstance = knex({
 
 const ALLOWED_THEMES = ["dogs", "animals", "flags", "food", "plants"];
 
+// 🔴 [blocking] - No try/catch around database queries. If the DB is unavailable or the query
+// fails, the unhandled promise rejection will crash the server. Wrap in try/catch or add
+// an Express error-handling middleware: app.use((err, req, res, next) => { ... })
 app.get("/api/cards", async (req, res) => {
   const theme = (req.query.theme || "dogs").toLowerCase();
   if (!ALLOWED_THEMES.includes(theme)) {
@@ -114,6 +117,7 @@ app.put("/api/score", async (req, res) => {
 
 const SCORES_PER_PAGE = 25;
 
+// 🎉 Good work: pagination with calculated rank - clean implementation
 app.get("/api/scores", async (req, res) => {
   const page = Math.max(1, parseInt(req.query.page, 10) || 1);
   const offset = (page - 1) * SCORES_PER_PAGE;

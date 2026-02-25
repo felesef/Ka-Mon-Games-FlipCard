@@ -1,3 +1,6 @@
+// 🔴 [blocking] - Make the modular code work and get rid of this file
+// functions like finishGame() and nextLevel() exist ONLY here, not in the modular code.
+
 const API_BASE =
   typeof window !== "undefined" && window.API_BASE != null
     ? window.API_BASE

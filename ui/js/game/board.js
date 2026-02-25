@@ -11,6 +11,9 @@ function setGameBoardGrid(cols, rows) {
   dom.gameBoard.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 }
 
+// 🟡 [important] - flipCard uses "this" keyword which requires it to be called as a method
+// (not an arrow function). This works with onclick assignment but would break with addEventListener
+// if bound incorrectly. Consider using an event parameter: function flipCard(e) { const card = e.currentTarget; }
 function flipCard() {
   if (!gameState.canFlip) return;
   if (this.classList.contains("flipped")) return;
@@ -75,6 +78,7 @@ function resetCards() {
 export function buildGame(imageUrls) {
   if (!dom.gameBoard) return;
   dom.gameBoard.innerHTML = "";
+  // 🟡 [important] - Math.random() - 0.5 is a biased shuffle. See: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
   const sorted = [...imageUrls, ...imageUrls].sort(() => Math.random() - 0.5);
 
   for (let i = 0; i < sorted.length; i++) {

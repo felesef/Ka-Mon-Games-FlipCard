@@ -6,6 +6,10 @@ const dbPath = path.join(__dirname, "..", "data", "database.sqlite3");
 const cardsPath = path.join(__dirname, "..", "data", "cards.json");
 
 fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+// 🟡 [important] - This deletes the entire database (including all scores) every time
+// the script runs. The Render build command runs "npm run create-db", which means every
+// deploy wipes all player scores. Consider checking if tables exist first and only seeding
+// if the Cards table is empty
 if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
 
 const knexInstance = knex({

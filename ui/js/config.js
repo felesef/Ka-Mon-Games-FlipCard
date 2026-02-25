@@ -3,6 +3,8 @@ export const API_BASE =
     ? window.API_BASE
     : "";
 
+// 🟡 [important] These themes should be fetched 
+// from the server in a real app, to avoid hardcoding and allow dynamic updates.
 export const THEMES = ["dogs", "flags", "animals", "plants", "food"];
 
 export const LEVELS = {

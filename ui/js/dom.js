@@ -1,3 +1,7 @@
+// 🟡 [important] every time you get one element you call 
+// document.getElementById which causes a DOM query. This is inefficient if done repeatedly. 
+// Instead, cache these elements in a single object with getters, so the DOM is only queried once per element.
+// This also centralizes all DOM queries in one place, making it easier to manage and update the UI structure.
 export const dom = {
   get gameBoard() {
     return document.getElementById("gameBoard");

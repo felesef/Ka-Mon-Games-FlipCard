@@ -4,6 +4,8 @@
   gap: 15px;
   margin-bottom: 25px;
   width: 100%;
+  /* 🟡 [important] - min-width: 500px will cause horizontal scroll on mobile devices
+     (screens < 500px). Use a media query or remove this to ensure mobile responsiveness */
   min-width: 500px;
   max-width: 800px;
 }

@@ -1,3 +1,4 @@
+# 🎉 Good work: CI/CD pipeline with GitHub Pages deployment and configurable API_BASE_URL via secrets
 name: Deploy UI to GitHub Pages
 
 on:

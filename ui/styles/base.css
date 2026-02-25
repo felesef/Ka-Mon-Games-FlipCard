@@ -1,3 +1,9 @@
+/*
+🟡 [important] Consider using css variables 
+for colors, spacing, and other design tokens. This allows for easier theming and maintenance. 
+Also, create more global styles for common elements (typography or animations, etc.) to ensure consistency across the app.
+*/
+
 * {
   box-sizing: border-box;
   margin: 0;
