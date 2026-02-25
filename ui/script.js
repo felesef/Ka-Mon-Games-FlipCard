@@ -140,6 +140,9 @@ async function showWinModal() {
   document.getElementById("finalScore").textContent = finalScore;
   winModal.classList.add("show");
 
+  const nextLevelBtn = document.getElementById("nextLevel");
+  if (nextLevelBtn) nextLevelBtn.style.display = currentLevel < 5 ? "" : "none";
+
   const playerName = getStoredUserName();
   if (playerName) {
     try {
@@ -161,12 +164,16 @@ function closeModal() {
 function buildGame(imageUrls) {
   gameBoard.innerHTML = "";
   const sorted = [...imageUrls, ...imageUrls].sort(() => Math.random() - 0.5);
+  // Resolve card back URL from current page so it works with any base URL or file
+  const cardBackSrc = new URL("kamon_card_back.png", window.location.href).href;
 
   for (let i = 0; i < sorted.length; i++) {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML =
-      '<div class="card-front"><img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/main/ui/kamon_card_back.png?raw=true"/></div>' +
+      '<div class="card-front"><img src="' +
+      cardBackSrc +
+      '" alt="Card back"/></div>' +
       '<div class="card-back"><img src="' +
       sorted[i] +
       '" alt=""></div>';
@@ -277,9 +284,6 @@ function onStartGame() {
   }
 
   const level = LEVELS[currentLevel];
-  console.log("LEVEL....", currentLevel);
-  console.log("LEVEL....", level);
-  // currentTheme = theme;
 
   currentPairCount = level.pairCount;
   currentCols = level.cols;

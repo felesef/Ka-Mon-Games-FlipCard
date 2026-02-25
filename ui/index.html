@@ -60,7 +60,7 @@
                 <input type="radio" class="title-input" name="choice" value="animals" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/animals-theme.png?raw=true" alt="Animals"/>
+                    <img src="./animals-theme.png" alt="Animals"/>
                   </span>
                   <span class="title-caption">
                     <span>Animals</span>
@@ -72,7 +72,7 @@
                 <input type="radio" class="title-input" name="choice" value="flags" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/flags-theme.png?raw=true" alt="Flags"/>
+                    <img src="./flags-theme.png" alt="Flags"/>
                   </span>
                   <span class="title-caption">
                     <span>Flags</span>
@@ -84,7 +84,7 @@
                 <input type="radio" class="title-input" name="choice" value="food" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/food-theme.png?raw=true" alt="Food"/>
+                    <img src="./food-theme.png" alt="Food"/>
                   </span>
                   <span class="title-caption">
                     <span>Food</span>
@@ -96,7 +96,7 @@
                 <input type="radio" class="title-input" name="choice" value="plants" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/plants-theme.png?raw=true" alt="Plants"/>
+                    <img src="./plants-theme.png" alt="Plants"/>
                   </span>
                   <span class="title-caption">
                     <span>Plants</span>
@@ -108,7 +108,7 @@
                 <input type="radio" class="title-input" name="choice" value="random" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/random-theme.png?raw=true" alt="Random"/>
+                    <img src="./random-theme.png" alt="Random"/>
                   </span>
                   <span class="title-caption">
                     <span>Random</span>
@@ -152,7 +152,7 @@
         <!-- 🔴 [blocking] - finishGame() and nextLevel() are NOT exposed to window in js/main.js.
              These inline onclick handlers will throw "is not defined" errors at runtime.-->
         <button type="button" class="button" onclick="finishGame()">Finish</button>
-        <button type="button" class="button" id ="nextLevel" onclick="nextLevel()">Next</button>
+        <button type="button" class="button" id="nextLevel" onclick="nextLevel()">Next</button>
         <!-- 🟡 [important] - This close button is disabled, so the user can never click it. Intentional? -->
        
         <button type="button" class="button" onclick="closeModal()" disabled>X</button>
@@ -169,9 +169,7 @@
       </div>
     </div>
 
-    <script type="module" src="./js/main.js"></script>
-    <!-- 🟡 [important] - Mixing inline onclick handlers (in HTML above) with module-based JS is fragile.
-         Prefer addEventListener in main.js for all buttons to keep a single source of truth -->
+    <script src="./script.js"></script>
     <script>
       setTimeout(function () {
         if (typeof newGame !== "function") {
@@ -182,6 +180,5 @@
         }
       }, 3000);
     </script>
-    <script src="./script.js"></script>
   </body>
 </html>
