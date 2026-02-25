@@ -81,11 +81,15 @@ export function buildGame(imageUrls) {
   // 🟡 [important] - Math.random() - 0.5 is a biased shuffle. See: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
   const sorted = [...imageUrls, ...imageUrls].sort(() => Math.random() - 0.5);
 
+  const cardBackSrc = new URL("kamon_card_back.png", window.location.href).href;
+
   for (let i = 0; i < sorted.length; i++) {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML =
-      '<div class="card-front"><i class="fas fa-question"></i></div>' +
+      '<div class="card-front"><img src="' +
+      cardBackSrc +
+      '" alt="Card back"/></div>' +
       '<div class="card-back"><img src="' +
       sorted[i] +
       '" alt=""></div>';

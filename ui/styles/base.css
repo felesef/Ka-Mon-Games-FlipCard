@@ -10,19 +10,25 @@ Also, create more global styles for common elements (typography or animations, e
   padding: 0;
 }
 
+:root {
+  --border: #422924e2;
+  --highlight: #ffd895;
+  --radius: 16px;
+  --gap: 12px;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  padding: 20px;
+  margin: 0;
+  background: url("https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/background.png?raw=true")
+    center / cover no-repeat fixed;
+  padding-top: auto;
 }
 
 .container {
   display: flex;
+  padding: 18px 28px 10px;
   flex-direction: column;
   align-items: center;
   gap: 16px;

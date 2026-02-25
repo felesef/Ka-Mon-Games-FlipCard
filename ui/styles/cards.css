@@ -1,15 +1,5 @@
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin-bottom: 25px;
-  width: 100%;
   /* 🟡 [important] - min-width: 500px will cause horizontal scroll on mobile devices
      (screens < 500px). Use a media query or remove this to ensure mobile responsiveness */
-  min-width: 500px;
-  max-width: 800px;
-}
-
 .card {
   background: transparent;
   aspect-ratio: 1;
@@ -58,6 +48,13 @@
   border: 5px solid #678fa0;
 }
 
+.card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
 .card-back {
   background: #fff;
   transform: rotateY(180deg);
@@ -65,8 +62,12 @@
   box-shadow: 0 6px 0 #d4a574;
   border: 5px solid #98d8c8;
 }
+.card.card-back .flipped {
+  transform: rotateY(180deg);
+}
 
-.card-back img {
+.card-back img,
+.card-front img {
   width: 100%;
   height: 100%;
   object-fit: cover;

@@ -11,8 +11,8 @@
   border: none;
   /* 🟡 [important] - Dark text (#080547) on a dark purple background (#532ec1) has poor contrast.
      Consider using white or a very light color for better readability and WCAG compliance */
-  background-color: #532ec1;
-  color: #080547;
+  background-color: #422924e2;
+  color: #ffd895;
   cursor: pointer;
   font-weight: bold;
 }

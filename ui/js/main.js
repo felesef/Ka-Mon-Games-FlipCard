@@ -1,10 +1,22 @@
-import { onStartGame } from "./ui/setup.js";
+import { onStartGame, initThemeSelection } from "./ui/setup.js";
 import {
   closeModal,
   closeScoreboard,
   openScoreboard,
+  finishGame,
 } from "./ui/modals.js";
 import { newGame } from "./game/board.js";
+import { gameState } from "./state.js";
+
+function nextLevel() {
+  closeModal();
+  gameState.currentLevel += 1;
+  if (gameState.currentLevel === 5) {
+    const nextLevelBtn = document.getElementById("nextLevel");
+    if (nextLevelBtn) nextLevelBtn.style.display = "none";
+  }
+  onStartGame();
+}
 
 function init() {
   const startBtn = document.getElementById("startGameBtn");
@@ -22,6 +34,8 @@ function init() {
   const closeScoreboardBtn = document.getElementById("closeScoreboardBtn");
   if (closeScoreboardBtn) closeScoreboardBtn.addEventListener("click", closeScoreboard);
 
+  initThemeSelection();
+
   // 🔴 [blocking] - finishGame() and nextLevel() are called via onclick in index.html but are
   // never imported or exposed here. Add them: window.finishGame = finishGame; window.nextLevel = nextLevel;
   // Or better yet, use addEventListener for those buttons too and remove all inline onclick handlers
@@ -29,6 +43,8 @@ function init() {
   window.closeModal = closeModal;
   window.closeScoreboard = closeScoreboard;
   window.openScoreboard = openScoreboard;
+  window.finishGame = finishGame;
+  window.nextLevel = nextLevel;
 
   // 🟡 [important] - IDs "newGameBtn", "scoreboardBtn", "closeWinModalBtn", "closeScoreboardBtn"
   // do not exist in index.html, so lines 13-23 above never attach any listeners.
