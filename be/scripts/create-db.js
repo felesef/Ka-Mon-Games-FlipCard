@@ -10,7 +10,7 @@ fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 // the script runs. The Render build command runs "npm run create-db", which means every
 // deploy wipes all player scores. Consider checking if tables exist first and only seeding
 // if the Cards table is empty
-if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
+// → Fixed: we only create tables and seed when the DB is missing or Cards table is empty.
 
 const knexInstance = knex({
   client: "sqlite3",
@@ -18,9 +18,18 @@ const knexInstance = knex({
   useNullAsDefault: true,
 });
 
-async function run() {
+async function tableExists(tableName) {
+  return knexInstance.schema.hasTable(tableName);
+}
+
+async function cardsTableEmpty() {
+  const result = await knexInstance("Cards").count("* as count").first();
+  return result && Number(result.count) === 0;
+}
+
+async function createTables() {
   await knexInstance.raw(`
-    CREATE TABLE Cards (
+    CREATE TABLE IF NOT EXISTS Cards (
       id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
       name VARCHAR(100) NOT NULL,
       imgURL VARCHAR(2048) NOT NULL,
@@ -28,14 +37,16 @@ async function run() {
     )
   `);
   await knexInstance.raw(`
-    CREATE TABLE Scores (
+    CREATE TABLE IF NOT EXISTS Scores (
       id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
       score INTEGER NOT NULL,
       playerName VARCHAR(100) NOT NULL,
       dateTime TEXT NOT NULL
     )
   `);
+}
 
+async function seedCards() {
   const cards = JSON.parse(fs.readFileSync(cardsPath, "utf8"));
   for (const c of cards) {
     await knexInstance("Cards").insert({
@@ -45,9 +56,24 @@ async function run() {
       theme: c.theme,
     });
   }
+}
+
+async function run() {
+  const cardsExists = await tableExists("Cards");
+  const needTables = !cardsExists;
+  const needSeed = needTables || (cardsExists && (await cardsTableEmpty()));
+
+  if (needTables) {
+    await createTables();
+  }
+  if (needSeed) {
+    await seedCards();
+    console.log("Created/updated", dbPath, needTables ? "(tables + seed)" : "(seed only)");
+  } else {
+    console.log("Database already has cards and scores; skipping to preserve data.");
+  }
 
   await knexInstance.destroy();
-  console.log("Created", dbPath);
 }
 
 run().catch((err) => {

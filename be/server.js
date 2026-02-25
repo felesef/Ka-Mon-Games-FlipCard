@@ -20,17 +20,33 @@ const knexInstance = knex({
   useNullAsDefault: true,
 });
 
-const ALLOWED_THEMES = ["dogs", "animals", "flags", "food", "plants"];
+async function getAllowedThemes() {
+  const rows = await knexInstance("Cards").distinct("theme").select("theme").orderBy("theme");
+  return rows.map((r) => r.theme);
+}
 
 // 🔴 [blocking] - No try/catch around database queries. If the DB is unavailable or the query
 // fails, the unhandled promise rejection will crash the server. Wrap in try/catch or add
 // an Express error-handling middleware: app.use((err, req, res, next) => { ... })
-app.get("/api/cards", async (req, res) => {
-  const theme = (req.query.theme || "dogs").toLowerCase();
-  if (!ALLOWED_THEMES.includes(theme)) {
+// → Fixed: wrapAsync forwards async rejections to next(); error middleware below returns 500 JSON.
+function wrapAsync(fn) {
+  return (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+  };
+}
+
+app.get("/api/themes", wrapAsync(async (req, res) => {
+  const themes = await getAllowedThemes();
+  res.json(themes);
+}));
+
+app.get("/api/cards", wrapAsync(async (req, res) => {
+  const allowedThemes = await getAllowedThemes();
+  const theme = (req.query.theme || (allowedThemes[0] || "animals")).toLowerCase();
+  if (!allowedThemes.includes(theme)) {
     return res.status(400).json({
-      error: "theme must be one of: dogs, animals, flags, food, plants",
-      allowed: ALLOWED_THEMES,
+      error: "theme does not exist",
+      allowed: allowedThemes,
     });
   }
   const pairCount = Math.min(Math.max(1, parseInt(req.query.pairCount, 10) || 8), 100);
@@ -49,9 +65,9 @@ app.get("/api/cards", async (req, res) => {
   }));
 
   res.json(body);
-});
+}));
 
-app.post("/api/score", async (req, res) => {
+app.post("/api/score", wrapAsync(async (req, res) => {
   const { playerName, score } = req.body || {};
   if (typeof playerName !== "string" || typeof score !== "number") {
     return res.status(400).json({
@@ -79,9 +95,9 @@ app.post("/api/score", async (req, res) => {
     score: row.score,
     dateTime: row.dateTime,
   });
-});
+}));
 
-app.put("/api/score", async (req, res) => {
+app.put("/api/score", wrapAsync(async (req, res) => {
   const { id, score } = req.body || {};
   if (id == null || typeof score !== "number") {
     return res.status(400).json({
@@ -113,12 +129,12 @@ app.put("/api/score", async (req, res) => {
     score: row.score,
     dateTime: row.dateTime,
   });
-});
+}));
 
 const SCORES_PER_PAGE = 25;
 
 // 🎉 Good work: pagination with calculated rank - clean implementation
-app.get("/api/scores", async (req, res) => {
+app.get("/api/scores", wrapAsync(async (req, res) => {
   const page = Math.max(1, parseInt(req.query.page, 10) || 1);
   const offset = (page - 1) * SCORES_PER_PAGE;
 
@@ -137,13 +153,18 @@ app.get("/api/scores", async (req, res) => {
   }));
 
   res.json(body);
-});
+}));
 
 const uiDir = path.join(__dirname, "..", "ui");
 app.use(express.static(uiDir));
 app.get("*", (req, res, next) => {
   if (req.path.startsWith("/api") || req.path.startsWith("/images")) return next();
   res.sendFile(path.join(uiDir, "index.html"));
+});
+
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ error: "Internal server error" });
 });
 
 app.listen(PORT, () => {

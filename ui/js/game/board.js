@@ -11,22 +11,33 @@ function setGameBoardGrid(cols, rows) {
   dom.gameBoard.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 }
 
+/** Fisher-Yates shuffle for uniform random ordering. */
+function shuffleFisherYates(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // 🟡 [important] - flipCard uses "this" keyword which requires it to be called as a method
 // (not an arrow function). This works with onclick assignment but would break with addEventListener
 // if bound incorrectly. Consider using an event parameter: function flipCard(e) { const card = e.currentTarget; }
-function flipCard() {
+// → Fixed: use event parameter so it works with both onclick and addEventListener.
+function flipCard(e) {
+  const card = e.currentTarget;
   if (!gameState.canFlip) return;
-  if (this.classList.contains("flipped")) return;
-  if (this.classList.contains("matched")) return;
+  if (card.classList.contains("flipped")) return;
+  if (card.classList.contains("matched")) return;
 
   if (!gameState.isTimerOn) startTimer();
 
-  this.classList.add("flipped");
+  card.classList.add("flipped");
 
   if (gameState.firstCard == null) {
-    gameState.firstCard = this;
+    gameState.firstCard = card;
   } else {
-    gameState.secondCard = this;
+    gameState.secondCard = card;
     checkMatch();
     gameState.canFlip = false;
   }
@@ -79,7 +90,8 @@ export function buildGame(imageUrls) {
   if (!dom.gameBoard) return;
   dom.gameBoard.innerHTML = "";
   // 🟡 [important] - Math.random() - 0.5 is a biased shuffle. See: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-  const sorted = [...imageUrls, ...imageUrls].sort(() => Math.random() - 0.5);
+  // → Fixed: Fisher-Yates shuffle for uniform random ordering.
+  const sorted = shuffleFisherYates([...imageUrls, ...imageUrls]);
 
   const cardBackSrc = new URL("kamon_card_back.png", window.location.href).href;
 

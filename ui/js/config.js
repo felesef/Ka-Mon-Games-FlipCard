@@ -3,8 +3,10 @@ export const API_BASE =
     ? window.API_BASE
     : "";
 
-// 🟡 [important] These themes should be fetched 
+// 🟡 [important] These themes should be fetched
 // from the server in a real app, to avoid hardcoding and allow dynamic updates.
+// → Fixed: themes for random are fetched from GET /api/themes (includes "dogs" only for random).
+// THEMES below is the UI selector list (no "dogs"); "dogs" is used only when user picks "random".
 export const THEMES = ["flags", "animals", "plants", "food"];
 
 export const LEVELS = {

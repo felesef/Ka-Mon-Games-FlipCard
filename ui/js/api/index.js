@@ -1,12 +1,24 @@
-import { API_BASE, THEMES } from "../config.js";
+import { API_BASE } from "../config.js";
+
+let cachedThemes = null;
+
+export async function fetchThemes() {
+  if (cachedThemes) return cachedThemes;
+  const res = await fetch(`${API_BASE}/api/themes`);
+  if (!res.ok) throw new Error("Failed to load themes");
+  const data = await res.json();
+  cachedThemes = Array.isArray(data) ? data : [];
+  return cachedThemes;
+}
 
 export async function fetchCards(theme, pairCount) {
-  const t =
-    theme === "random"
-      ? THEMES[Math.floor(Math.random() * THEMES.length)]
-      : theme;
+  let pick = theme;
+  if (theme === "random") {
+    const themes = await fetchThemes();
+    pick = themes[Math.floor(Math.random() * themes.length)];
+  }
   const res = await fetch(
-    `${API_BASE}/api/cards?theme=${encodeURIComponent(t)}&pairCount=${pairCount}`
+    `${API_BASE}/api/cards?theme=${encodeURIComponent(pick)}&pairCount=${pairCount}`
   );
   if (!res.ok) throw new Error("Failed to load cards");
   const data = await res.json();
