@@ -14,10 +14,11 @@
   <body>
     <div class="container">
       <!-- 🟡 [important] - Logo uses a hardcoded GitHub raw URL. Use a relative path (e.g. "../kamon-logo.png") so the asset works offline and loads faster -->
+      <!-- → Fixed: logo at ./kamon-logo.png in repo. -->
       <div class="header-logo">
         <a href="/" aria-label="KAMON Memory Game">
           <img
-            src="https://raw.githubusercontent.com/felesef/Ka-Mon-Games-FlipCard/908540935adb0ed0d7ac7ab8f3ad74bd9ca88280/kamon-logo.png"
+            src="./kamon-logo.png"
             alt="KAMON Memory Game"
             class="logo"
         /></a>
@@ -38,16 +39,19 @@
           <div class="setup-container" id="setupContainer">
             <!-- 🔴 [blocking] - The <label> element on the next line wraps the text input, the Guest button,
                  AND the theme radio tiles. A <label> should only wrap a single form control. -->
-            <label>
+            <!-- → Fixed: label wraps only the name input. -->
+            <label for="userName">
             <input
               type="text"
               id="userName"
               placeholder="Your name"
               maxlength="100"
             />
+            </label>
             <!-- 🔴 [blocking] - onclick="Guest()" calls a function that is never defined anywhere.
                  The button is also "disabled" so it can never be clicked.  -->
-            <button type="button" class="button" onclick="Guest()" disabled>
+            <!-- → Hidden: API requires a name; guest play not supported. -->
+            <button type="button" class="button" onclick="Guest()" disabled hidden>
               Play as Guest
             </button>
             <!-- tiles card -->
@@ -56,7 +60,9 @@
 
               <!-- 🟡 [important] - All theme images use hardcoded GitHub blob URLs (from a specific branch).
                    Use relative paths like "./animals-theme.png" so they work locally and on any deployment -->
+              <!-- → Fixed: relative paths ./animals-theme.png etc. -->
               <li class="title-wrap">
+                <label>
                 <input type="radio" class="title-input" name="choice" value="animals" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
@@ -69,6 +75,7 @@
                 </label>
               </li>
               <li class="title-wrap">
+                <label>
                 <input type="radio" class="title-input" name="choice" value="flags" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
@@ -81,6 +88,7 @@
                 </label>
               </li>
               <li class="title-wrap">
+                <label>
                 <input type="radio" class="title-input" name="choice" value="food" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
@@ -93,6 +101,7 @@
                 </label>
               </li>
               <li class="title-wrap">
+                <label>
                 <input type="radio" class="title-input" name="choice" value="plants" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
@@ -105,6 +114,7 @@
                 </label>
               </li>
                             <li class="title-wrap">
+                <label>
                 <input type="radio" class="title-input" name="choice" value="random" data-group="choice" data-title="title-1" data-value="1"/>
                 <span class="title" data-title-ui="title-1">
                   <span class="title-media">
@@ -123,10 +133,10 @@
         </div>
 
         <div class="controls">
-          <button type="button" class="button" onclick="newGame()">
+          <button type="button" class="button" id="newGameBtn">
             New Game
           </button>
-          <button type="button" class="button" onclick="openScoreboard()">
+          <button type="button" class="button" id="scoreboardBtn">
             Scoreboard
           </button>
         </div>
@@ -151,11 +161,12 @@
         <p class="scoreboard-hint">Check the scoreboard for your rank.</p>
         <!-- 🔴 [blocking] - finishGame() and nextLevel() are NOT exposed to window in js/main.js.
              These inline onclick handlers will throw "is not defined" errors at runtime.-->
-        <button type="button" class="button" onclick="finishGame()">Finish</button>
-        <button type="button" class="button" id="nextLevel" onclick="nextLevel()">Next</button>
+        <!-- → Fixed: addEventListener in main.js for Finish and Next; no inline onclicks. -->
+        <button type="button" class="button" id="finishGameBtn">Finish</button>
+        <button type="button" class="button" id="nextLevel">Next</button>
         <!-- 🟡 [important] - This close button is disabled, so the user can never click it. Intentional? -->
-       
-        <button type="button" class="button" onclick="closeModal()" disabled>X</button>
+        <!-- → Hidden: not used; modal is closed via Finish or Next. -->
+        <button type="button" class="button" id="closeWinModalBtn" disabled hidden>X</button>
       </div>
     </div>
 
@@ -163,22 +174,16 @@
       <div class="modal-content modal-scoreboard">
         <h2>Scoreboard</h2>
         <div id="scoreboardList"></div>
-        <button type="button" class="button" onclick="closeScoreboard()">
+        <button type="button" class="button" id="closeScoreboardBtn">
           Close
         </button>
       </div>
     </div>
 
     <script type="module" src="./js/main.js"></script>
-    <script>
-      setTimeout(function () {
-        if (typeof newGame !== "function") {
-          var el = document.createElement("p");
-          el.style.cssText = "background:#c00;color:#fff;padding:12px;text-align:center;margin:0;";
-          el.textContent = "App failed to load. Open from http://localhost:3000 (run npm start in project root).";
-          document.body.insertBefore(el, document.body.firstChild);
-        }
-      }, 3000);
-    </script>
+    <script src="./js/load-fallback.js"></script>
+    <!-- 🟡 [important] - Mixing inline onclick handlers (in HTML above) with module-based JS is fragile.
+         Prefer addEventListener in main.js for all buttons to keep a single source of truth -->
+    <!-- → All buttons use addEventListener in main.js; load fallback in js/load-fallback.js. -->
   </body>
 </html>

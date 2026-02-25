@@ -28,6 +28,12 @@ function init() {
   const scoreboardBtn = document.getElementById("scoreboardBtn");
   if (scoreboardBtn) scoreboardBtn.addEventListener("click", () => openScoreboard());
 
+  const finishGameBtn = document.getElementById("finishGameBtn");
+  if (finishGameBtn) finishGameBtn.addEventListener("click", finishGame);
+
+  const nextLevelBtn = document.getElementById("nextLevel");
+  if (nextLevelBtn) nextLevelBtn.addEventListener("click", nextLevel);
+
   const closeWinModalBtn = document.getElementById("closeWinModalBtn");
   if (closeWinModalBtn) closeWinModalBtn.addEventListener("click", closeModal);
 
@@ -39,6 +45,7 @@ function init() {
   // 🔴 [blocking] - finishGame() and nextLevel() are called via onclick in index.html but are
   // never imported or exposed here. Add them: window.finishGame = finishGame; window.nextLevel = nextLevel;
   // Or better yet, use addEventListener for those buttons too and remove all inline onclick handlers
+  // → Fixed: addEventListener for Finish and Next; added IDs to all buttons so listeners attach. No inline onclicks for these.
   window.newGame = newGame;
   window.closeModal = closeModal;
   window.closeScoreboard = closeScoreboard;
@@ -49,6 +56,7 @@ function init() {
   // 🟡 [important] - IDs "newGameBtn", "scoreboardBtn", "closeWinModalBtn", "closeScoreboardBtn"
   // do not exist in index.html, so lines 13-23 above never attach any listeners.
   // The onclick attributes in the HTML are doing all the work instead
+  // → Fixed: added id="newGameBtn", id="scoreboardBtn", id="finishGameBtn", id="closeWinModalBtn", id="closeScoreboardBtn" in index.html.
 }
 
 if (document.readyState === "loading") {

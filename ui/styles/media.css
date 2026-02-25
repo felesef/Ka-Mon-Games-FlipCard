@@ -1,0 +1,15 @@
+/* Mobile responsiveness: avoid horizontal scroll and improve touch targets. */
+
+@media screen and (max-width: 499px) {
+  .game-board {
+    min-width: 0;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .game-board {
+    min-width: 500px;
+  }
+}

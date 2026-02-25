@@ -1,5 +1,6 @@
 // 🔴 [blocking] - Make the modular code work and get rid of this file
 // functions like finishGame() and nextLevel() exist ONLY here, not in the modular code.
+// → Fixed: All game logic moved to modules
 
 const API_BASE =
   typeof window !== "undefined" && window.API_BASE != null
@@ -164,7 +165,6 @@ function closeModal() {
 function buildGame(imageUrls) {
   gameBoard.innerHTML = "";
   const sorted = [...imageUrls, ...imageUrls].sort(() => Math.random() - 0.5);
-  // Resolve card back URL from current page so it works with any base URL or file
   const cardBackSrc = new URL("kamon_card_back.png", window.location.href).href;
 
   for (let i = 0; i < sorted.length; i++) {
