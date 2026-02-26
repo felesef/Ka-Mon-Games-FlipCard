@@ -1,6 +1,6 @@
-  /* 🟡 [important] - min-width: 500px will cause horizontal scroll on mobile devices
+/* 🟡 [important] - min-width: 500px will cause horizontal scroll on mobile devices
      (screens < 500px). Use a media query or remove this to ensure mobile responsiveness */
-  /* → Fixed: see layout.css and media.css; min-width only on larger screens. */
+/* → Fixed: see layout.css and media.css; min-width only on larger screens. */
 .card {
   background: transparent;
   aspect-ratio: 1;
@@ -34,7 +34,7 @@
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border-radius: 20px;
+  border-radius: var(--radius);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,29 +42,21 @@
 }
 
 .card-front {
-  background: #87ceeb;
-  color: #ff6b9d;
-  font-size: 3.5em;
-  box-shadow: 0 6px 0 #d4a574;
-  border: 5px solid #678fa0;
+  border: 5px solid var(--highlight);
 }
 
 .card-front img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: inherit;
+  border-radius: var(--radius);
 }
 
 .card-back {
-  background: #fff;
+  background: var(--highlight);
   transform: rotateY(180deg);
   overflow: hidden;
-  box-shadow: 0 6px 0 #d4a574;
-  border: 5px solid #98d8c8;
-}
-.card.card-back .flipped {
-  transform: rotateY(180deg);
+  border: 5px solid var(--highlight);
 }
 
 .card-back img,

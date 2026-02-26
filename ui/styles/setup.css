@@ -1,16 +1,16 @@
 .setup-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 24px;
-  background: #422924e2;
-  border-radius: 16px;
+  gap: var(--gap);
+  padding: var(--space-lg);
+  background: var(--border);
+  border-radius: var(--radius);
   width: 96%;
 }
 
 .setup-container label {
   font-weight: bold;
-  color: #ffd895;
+  color: var(--highlight);
 }
 
 .setup-container input,
@@ -19,12 +19,12 @@
   font-size: 16px;
   border-radius: 8px;
   border: 2px solid #35211de2;
+  background-color: var(--highlight);
 }
 
 #userName {
-  background-color: #ffd895;
-  color-scheme: #35211de2;
-  border: #422924e2;
+  background-color: var(--highlight);
+  border: var(--border);
   color: #35211de2;
   margin-right: 15px;
 }

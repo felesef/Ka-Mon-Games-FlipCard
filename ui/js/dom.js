@@ -6,7 +6,7 @@
 const _cache = {};
 
 function get(id) {
-  if (_cache[id] === undefined) _cache[id] = document.getElementById(id);
+  if (_cache[id] == null) _cache[id] = document.getElementById(id);
   return _cache[id];
 }
 

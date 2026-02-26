@@ -1,6 +1,6 @@
 .controls {
   display: flex;
-  gap: 12px;
+  gap: var(--gap);
   margin-top: 8px;
 }
 
@@ -12,8 +12,8 @@
   /* 🟡 [important] - Dark text (#080547) on a dark purple background (#532ec1) has poor contrast.
      Consider using white or a very light color for better readability and WCAG compliance */
   /* → Fixed: light color (#ffd895) on dark background (#422924e2) for readable, user friendly buttons. */
-  background-color: #422924e2;
-  color: #ffd895;
+  background-color: var(--border);
+  color: var(--highlight);
   cursor: pointer;
   font-weight: bold;
 }

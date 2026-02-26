@@ -4,7 +4,7 @@
   .game-board {
     min-width: 0;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: var(--space-md);
   }
 }
 
