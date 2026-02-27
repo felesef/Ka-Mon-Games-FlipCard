@@ -3,16 +3,18 @@ export const API_BASE =
     ? window.API_BASE
     : "";
 
-// 🟡 [important] These themes should be fetched 
+// 🟡 [important] These themes should be fetched
 // from the server in a real app, to avoid hardcoding and allow dynamic updates.
-export const THEMES = ["dogs", "flags", "animals", "plants", "food"];
+// → Fixed: themes for random are fetched from GET /api/themes (includes "dogs" only for random).
+// THEMES below is the UI selector list (no "dogs"); "dogs" is used only when user picks "random".
+export const THEMES = ["flags", "animals", "plants", "food"];
 
 export const LEVELS = {
-  "4x2": { pairCount: 4, cols: 4, rows: 2 },
-  "4x3": { pairCount: 6, cols: 4, rows: 3 },
-  "4x4": { pairCount: 8, cols: 4, rows: 4 },
-  "5x4": { pairCount: 10, cols: 5, rows: 4 },
-  "5x6": { pairCount: 15, cols: 5, rows: 6 },
+  1: { pairCount: 4, cols: 4, rows: 2 },
+  2: { pairCount: 6, cols: 4, rows: 3 },
+  3: { pairCount: 8, cols: 4, rows: 4 },
+  4: { pairCount: 10, cols: 5, rows: 4 },
+  5: { pairCount: 15, cols: 5, rows: 6 },
 };
 
 export const POINTS_PER_CARD = 10;

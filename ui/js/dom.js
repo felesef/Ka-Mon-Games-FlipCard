@@ -1,34 +1,42 @@
-// 🟡 [important] every time you get one element you call 
-// document.getElementById which causes a DOM query. This is inefficient if done repeatedly. 
+// 🟡 [important] every time you get one element you call
+// document.getElementById which causes a DOM query. This is inefficient if done repeatedly.
 // Instead, cache these elements in a single object with getters, so the DOM is only queried once per element.
 // This also centralizes all DOM queries in one place, making it easier to manage and update the UI structure.
+// → Fixed: with cache each element is queried once; repeated calls return the cached reference.
+const _cache = {};
+
+function get(id) {
+  if (_cache[id] == null) _cache[id] = document.getElementById(id);
+  return _cache[id];
+}
+
 export const dom = {
   get gameBoard() {
-    return document.getElementById("gameBoard");
+    return get("gameBoard");
   },
   get movesCounterElement() {
-    return document.getElementById("movesCounter");
+    return get("movesCounter");
   },
   get timeCounterElement() {
-    return document.getElementById("timeCounter");
+    return get("timeCounter");
   },
   get winModal() {
-    return document.getElementById("winModal");
+    return get("winModal");
   },
   get setupContainer() {
-    return document.getElementById("setupContainer");
+    return get("setupContainer");
   },
   get gameArea() {
-    return document.getElementById("gameArea");
+    return get("gameArea");
   },
   get scoreboardModal() {
-    return document.getElementById("scoreboardModal");
+    return get("scoreboardModal");
   },
   get scoreboardList() {
-    return document.getElementById("scoreboardList");
+    return get("scoreboardList");
   },
   getStoredUserName() {
-    const input = document.getElementById("userName");
+    const input = get("userName");
     return input ? String(input.value || "").trim() : "";
   },
 };

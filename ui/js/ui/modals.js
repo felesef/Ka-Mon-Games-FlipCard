@@ -23,6 +23,9 @@ export async function showWinModal() {
   if (finalScoreEl) finalScoreEl.textContent = finalScore;
   if (dom.winModal) dom.winModal.classList.add("show");
 
+  const nextLevelBtn = document.getElementById("nextLevel");
+  if (nextLevelBtn) nextLevelBtn.style.display = gameState.currentLevel < 5 ? "" : "none";
+
   const playerName = dom.getStoredUserName();
   if (playerName) {
     try {
@@ -63,4 +66,9 @@ export async function openScoreboard() {
 
 export function closeScoreboard() {
   if (dom.scoreboardModal) dom.scoreboardModal.classList.remove("show");
+}
+
+export function finishGame() {
+  openScoreboard();
+  closeModal();
 }

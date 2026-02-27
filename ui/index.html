@@ -8,16 +8,15 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
   </head>
 
   <body>
     <div class="container">
-      <!-- 🟡 [important] - Logo uses a hardcoded GitHub raw URL. Use a relative path (e.g. "../kamon-logo.png") so the asset works offline and loads faster -->
       <div class="header-logo">
         <a href="/" aria-label="KAMON Memory Game">
           <img
-            src="https://raw.githubusercontent.com/felesef/Ka-Mon-Games-FlipCard/908540935adb0ed0d7ac7ab8f3ad74bd9ca88280/kamon-logo.png"
+            src="../images/homepage/kamon-logo.png"
             alt="KAMON Memory Game"
             class="logo"
         /></a>
@@ -33,102 +32,155 @@
           <span class="status-value" id="timeCounter">0:00</span>
         </div>
       </div>
+      <div class="controls">
+        <button type="button" class="button" id="newGameBtn">New Game</button>
+        <button type="button" class="button" id="scoreboardBtn">
+          Scoreboard
+        </button>
+      </div>
       <div class="setup-container-wrapper">
         <div class="setup-row">
           <div class="setup-container" id="setupContainer">
-            <!-- 🔴 [blocking] - The <label> element on the next line wraps the text input, the Guest button,
-                 AND the theme radio tiles. A <label> should only wrap a single form control. -->
-            <label>
-            <input
-              type="text"
-              id="userName"
-              placeholder="Your name"
-              maxlength="100"
-            />
+            <label for="userName">
+              <input
+                type="text"
+                id="userName"
+                placeholder="Your name"
+                maxlength="100"
+              />
+            </label>
             <!-- 🔴 [blocking] - onclick="Guest()" calls a function that is never defined anywhere.
                  The button is also "disabled" so it can never be clicked.  -->
+            <!-- → Hidden: API requires a name; guest play not supported. -->
             <button type="button" class="button" onclick="Guest()" disabled>
               Play as Guest
             </button>
             <!-- tiles card -->
             <div>
-            <ul class="title-list" data-group="choice">
-
-              <!-- 🟡 [important] - All theme images use hardcoded GitHub blob URLs (from a specific branch).
-                   Use relative paths like "./animals-theme.png" so they work locally and on any deployment -->
-              <li class="title-wrap">
-                <input type="radio" class="title-input" name="choice" value="animals" data-group="choice" data-title="title-1" data-value="1"/>
-                <span class="title" data-title-ui="title-1">
-                  <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/animals-theme.png?raw=true" alt="Animals"/>
-                  </span>
-                  <span class="title-caption">
-                    <span>Animals</span>
-                  </span>
-                </span>
-                </label>
-              </li>
-              <li class="title-wrap">
-                <input type="radio" class="title-input" name="choice" value="flags" data-group="choice" data-title="title-1" data-value="1"/>
-                <span class="title" data-title-ui="title-1">
-                  <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/flags-theme.png?raw=true" alt="Flags"/>
-                  </span>
-                  <span class="title-caption">
-                    <span>Flags</span>
-                  </span>
-                </span>
-                </label>
-              </li>
-              <li class="title-wrap">
-                <input type="radio" class="title-input" name="choice" value="food" data-group="choice" data-title="title-1" data-value="1"/>
-                <span class="title" data-title-ui="title-1">
-                  <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/food-theme.png?raw=true" alt="Food"/>
-                  </span>
-                  <span class="title-caption">
-                    <span>Food</span>
-                  </span>
-                </span>
-                </label>
-              </li>
-              <li class="title-wrap">
-                <input type="radio" class="title-input" name="choice" value="plants" data-group="choice" data-title="title-1" data-value="1"/>
-                <span class="title" data-title-ui="title-1">
-                  <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/plants-theme.png?raw=true" alt="Plants"/>
-                  </span>
-                  <span class="title-caption">
-                    <span>Plants</span>
-                  </span>
-                </span>
-                </label>
-              </li>
-                            <li class="title-wrap">
-                <input type="radio" class="title-input" name="choice" value="random" data-group="choice" data-title="title-1" data-value="1"/>
-                <span class="title" data-title-ui="title-1">
-                  <span class="title-media">
-                    <img src="https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/ui/random-theme.png?raw=true" alt="Random"/>
-                  </span>
-                  <span class="title-caption">
-                    <span>Random</span>
-                  </span>
-                </span>
-                </label>
-              </li>
-            </ul>
+              <ul class="title-list" data-group="choice">
+                <li class="title-wrap">
+                  <label>
+                    <input
+                      type="radio"
+                      class="title-input"
+                      name="choice"
+                      value="animals"
+                      data-group="choice"
+                      data-title="title-1"
+                      data-value="1"
+                    />
+                    <span class="title" data-title-ui="title-1">
+                      <span class="title-media">
+                        <img
+                          src="../images/homepage/animals-theme.png"
+                          alt="Animals"
+                        />
+                      </span>
+                      <span class="title-caption">
+                        <span>Animals</span>
+                      </span>
+                    </span>
+                  </label>
+                </li>
+                <li class="title-wrap">
+                  <label>
+                    <input
+                      type="radio"
+                      class="title-input"
+                      name="choice"
+                      value="flags"
+                      data-group="choice"
+                      data-title="title-1"
+                      data-value="1"
+                    />
+                    <span class="title" data-title-ui="title-1">
+                      <span class="title-media">
+                        <img
+                          src="../images/homepage/flags-theme.png"
+                          alt="Flags"
+                        />
+                      </span>
+                      <span class="title-caption">
+                        <span>Flags</span>
+                      </span>
+                    </span>
+                  </label>
+                </li>
+                <li class="title-wrap">
+                  <label>
+                    <input
+                      type="radio"
+                      class="title-input"
+                      name="choice"
+                      value="food"
+                      data-group="choice"
+                      data-title="title-1"
+                      data-value="1"
+                    />
+                    <span class="title" data-title-ui="title-1">
+                      <span class="title-media">
+                        <img
+                          src="../images/homepage/food-theme.png"
+                          alt="Food"
+                        />
+                      </span>
+                      <span class="title-caption">
+                        <span>Food</span>
+                      </span>
+                    </span>
+                  </label>
+                </li>
+                <li class="title-wrap">
+                  <label>
+                    <input
+                      type="radio"
+                      class="title-input"
+                      name="choice"
+                      value="plants"
+                      data-group="choice"
+                      data-title="title-1"
+                      data-value="1"
+                    />
+                    <span class="title" data-title-ui="title-1">
+                      <span class="title-media">
+                        <img
+                          src="../images/homepage/plants-theme.png"
+                          alt="Plants"
+                        />
+                      </span>
+                      <span class="title-caption">
+                        <span>Plants</span>
+                      </span>
+                    </span>
+                  </label>
+                </li>
+                <li class="title-wrap">
+                  <label>
+                    <input
+                      type="radio"
+                      class="title-input"
+                      name="choice"
+                      value="random"
+                      data-group="choice"
+                      data-title="title-1"
+                      data-value="1"
+                    />
+                    <span class="title" data-title-ui="title-1">
+                      <span class="title-media">
+                        <img
+                          src="../images/homepage/random-theme.png"
+                          alt="Random"
+                        />
+                      </span>
+                      <span class="title-caption">
+                        <span>Random</span>
+                      </span>
+                    </span>
+                  </label>
+                </li>
+              </ul>
             </div>
-        
           </div>
-        </div>
-
-        <div class="controls">
-          <button type="button" class="button" onclick="newGame()">
-            New Game
-          </button>
-          <button type="button" class="button" onclick="openScoreboard()">
-            Scoreboard
-          </button>
         </div>
       </div>
 
@@ -151,11 +203,11 @@
         <p class="scoreboard-hint">Check the scoreboard for your rank.</p>
         <!-- 🔴 [blocking] - finishGame() and nextLevel() are NOT exposed to window in js/main.js.
              These inline onclick handlers will throw "is not defined" errors at runtime.-->
-        <button type="button" class="button" onclick="finishGame()">Finish</button>
-        <button type="button" class="button" id ="nextLevel" onclick="nextLevel()">Next</button>
+        <!-- → Fixed: addEventListener in main.js for Finish and Next; no inline onclicks. -->
+        <button type="button" class="button" id="finishGameBtn">Finish</button>
+        <button type="button" class="button" id="nextLevel">Next</button>
         <!-- 🟡 [important] - This close button is disabled, so the user can never click it. Intentional? -->
-       
-        <button type="button" class="button" onclick="closeModal()" disabled>X</button>
+        <!-- → Hidden: not used; modal is closed via Finish or Next. -->
       </div>
     </div>
 
@@ -163,25 +215,16 @@
       <div class="modal-content modal-scoreboard">
         <h2>Scoreboard</h2>
         <div id="scoreboardList"></div>
-        <button type="button" class="button" onclick="closeScoreboard()">
+        <button type="button" class="button" id="closeScoreboardBtn">
           Close
         </button>
       </div>
     </div>
 
     <script type="module" src="./js/main.js"></script>
+    <script src="./js/load-fallback.js"></script>
     <!-- 🟡 [important] - Mixing inline onclick handlers (in HTML above) with module-based JS is fragile.
          Prefer addEventListener in main.js for all buttons to keep a single source of truth -->
-    <script>
-      setTimeout(function () {
-        if (typeof newGame !== "function") {
-          var el = document.createElement("p");
-          el.style.cssText = "background:#c00;color:#fff;padding:12px;text-align:center;margin:0;";
-          el.textContent = "App failed to load. Open from http://localhost:3000 (run npm start in project root).";
-          document.body.insertBefore(el, document.body.firstChild);
-        }
-      }, 3000);
-    </script>
-    <script src="./script.js"></script>
+    <!-- → All buttons use addEventListener in main.js; load fallback in js/load-fallback.js. -->
   </body>
 </html>

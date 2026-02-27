@@ -15,11 +15,9 @@ export function onStartGame() {
   // Fix: read the selected radio value instead:
   //   const checkedRadio = document.querySelector('input[name="choice"]:checked');
   //   const theme = checkedRadio ? checkedRadio.value : "animals";
-  const themeSelect = document.getElementById("theme");
-  const levelSelect = document.getElementById("level");
-  const theme = themeSelect ? themeSelect.value : "dogs";
-  const levelKey = levelSelect ? levelSelect.value : "4x4";
-  const level = LEVELS[levelKey] || LEVELS["4x4"];
+  const checkedRadio = document.querySelector('input[name="choice"]:checked');
+  const theme = checkedRadio ? checkedRadio.value : "animals";
+  const level = LEVELS[gameState.currentLevel] || LEVELS[1];
 
   gameState.currentTheme = theme;
   gameState.currentPairCount = level.pairCount;
@@ -30,4 +28,24 @@ export function onStartGame() {
   if (dom.gameArea) dom.gameArea.hidden = false;
 
   newGame();
+}
+
+export function initThemeSelection() {
+  const titleList = document.querySelector(".title-list[data-group='choice']");
+  if (!titleList) return;
+
+  titleList.addEventListener("click", (e) => {
+    const wrap = e.target.closest(".title-wrap");
+    if (!wrap) return;
+    const radio = wrap.querySelector("input[type='radio'][name='choice']");
+    if (!radio) return;
+    radio.checked = true;
+    gameState.currentTheme = radio.value;
+  });
+
+  titleList.addEventListener("change", (e) => {
+    if (e.target.matches("input[type='radio'][name='choice']")) {
+      gameState.currentTheme = e.target.value;
+    }
+  });
 }

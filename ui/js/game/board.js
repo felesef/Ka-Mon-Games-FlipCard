@@ -11,22 +11,33 @@ function setGameBoardGrid(cols, rows) {
   dom.gameBoard.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
 }
 
+/** Fisher-Yates shuffle for uniform random ordering. */
+function shuffleFisherYates(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 // 🟡 [important] - flipCard uses "this" keyword which requires it to be called as a method
 // (not an arrow function). This works with onclick assignment but would break with addEventListener
 // if bound incorrectly. Consider using an event parameter: function flipCard(e) { const card = e.currentTarget; }
-function flipCard() {
+// → Fixed: use event parameter so it works with both onclick and addEventListener.
+function flipCard(e) {
+  const card = e.currentTarget;
   if (!gameState.canFlip) return;
-  if (this.classList.contains("flipped")) return;
-  if (this.classList.contains("matched")) return;
+  if (card.classList.contains("flipped")) return;
+  if (card.classList.contains("matched")) return;
 
   if (!gameState.isTimerOn) startTimer();
 
-  this.classList.add("flipped");
+  card.classList.add("flipped");
 
   if (gameState.firstCard == null) {
-    gameState.firstCard = this;
+    gameState.firstCard = card;
   } else {
-    gameState.secondCard = this;
+    gameState.secondCard = card;
     checkMatch();
     gameState.canFlip = false;
   }
@@ -38,11 +49,13 @@ function checkMatch() {
 
   if (match) {
     gameState.matchedPairs++;
-    gameState.firstCard.classList.add("flipped");
-    gameState.secondCard.classList.add("flipped");
+    // gameState.firstCard.classList.add("flipped");
+    // gameState.secondCard.classList.add("flipped");
     setTimeout(() => {
       gameState.firstCard.classList.add("matched");
       gameState.secondCard.classList.add("matched");
+      gameState.firstCard.classList.remove("flipped");
+      gameState.secondCard.classList.remove("flipped");
       const firstIcon = gameState.firstCard.querySelector(".card-front i");
       const secondIcon = gameState.secondCard.querySelector(".card-front i");
       if (firstIcon) {
@@ -79,13 +92,21 @@ export function buildGame(imageUrls) {
   if (!dom.gameBoard) return;
   dom.gameBoard.innerHTML = "";
   // 🟡 [important] - Math.random() - 0.5 is a biased shuffle. See: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-  const sorted = [...imageUrls, ...imageUrls].sort(() => Math.random() - 0.5);
+  // → Fixed: Fisher-Yates shuffle for uniform random ordering.
+  const sorted = shuffleFisherYates([...imageUrls, ...imageUrls]);
+
+  const cardBackSrc = new URL(
+    "../images/homepage/kamon_card_back.png",
+    window.location.href,
+  ).href;
 
   for (let i = 0; i < sorted.length; i++) {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML =
-      '<div class="card-front"><i class="fas fa-question"></i></div>' +
+      '<div class="card-front"><img src="' +
+      cardBackSrc +
+      '" alt="Card back"/></div>' +
       '<div class="card-back"><img src="' +
       sorted[i] +
       '" alt=""></div>';
@@ -114,7 +135,7 @@ export async function newGame() {
   try {
     const cards = await fetchCards(
       gameState.currentTheme,
-      gameState.currentPairCount
+      gameState.currentPairCount,
     );
     const urls = mapCardsToUrls(cards);
     if (urls.length === 0) throw new Error("No cards returned");

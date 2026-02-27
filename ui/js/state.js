@@ -1,7 +1,8 @@
 // 🎉 Good work: centralized game state in a single exported object.
 // This makes it easy to track and debug state changes across modules
 export const gameState = {
-  currentTheme: "dogs",
+  currentTheme: "animals",
+  currentLevel: 1,
   currentPairCount: 8,
   currentCols: 4,
   currentRows: 4,

@@ -1,4 +1,5 @@
 The overall architecture shows good understanding of software engineering principles. Fixing the blocking issues listed would make this a solid. Well done on the overall design and effort!
+// Will be handled with next PR
 
 ## Suggested Folder Structure
 Here's a cleaner layout:
