@@ -49,11 +49,13 @@ function checkMatch() {
 
   if (match) {
     gameState.matchedPairs++;
-    gameState.firstCard.classList.add("flipped");
-    gameState.secondCard.classList.add("flipped");
+    // gameState.firstCard.classList.add("flipped");
+    // gameState.secondCard.classList.add("flipped");
     setTimeout(() => {
       gameState.firstCard.classList.add("matched");
       gameState.secondCard.classList.add("matched");
+      gameState.firstCard.classList.remove("flipped");
+      gameState.secondCard.classList.remove("flipped");
       const firstIcon = gameState.firstCard.querySelector(".card-front i");
       const secondIcon = gameState.secondCard.querySelector(".card-front i");
       if (firstIcon) {
@@ -93,7 +95,10 @@ export function buildGame(imageUrls) {
   // → Fixed: Fisher-Yates shuffle for uniform random ordering.
   const sorted = shuffleFisherYates([...imageUrls, ...imageUrls]);
 
-  const cardBackSrc = new URL("kamon_card_back.png", window.location.href).href;
+  const cardBackSrc = new URL(
+    "../images/homepage/kamon_card_back.png",
+    window.location.href,
+  ).href;
 
   for (let i = 0; i < sorted.length; i++) {
     const card = document.createElement("div");
@@ -130,7 +135,7 @@ export async function newGame() {
   try {
     const cards = await fetchCards(
       gameState.currentTheme,
-      gameState.currentPairCount
+      gameState.currentPairCount,
     );
     const urls = mapCardsToUrls(cards);
     if (urls.length === 0) throw new Error("No cards returned");

@@ -60,7 +60,8 @@ async function seedCards() {
 
 async function run() {
   const cardsExists = await tableExists("Cards");
-  const needTables = !cardsExists;
+  const scoresExists = await tableExists("Scores");
+  const needTables = !cardsExists || !scoresExists;
   const needSeed = needTables || (cardsExists && (await cardsTableEmpty()));
 
   if (needTables) {
@@ -68,9 +69,15 @@ async function run() {
   }
   if (needSeed) {
     await seedCards();
-    console.log("Created/updated", dbPath, needTables ? "(tables + seed)" : "(seed only)");
+    console.log(
+      "Created/updated",
+      dbPath,
+      needTables ? "(tables + seed)" : "(seed only)",
+    );
   } else {
-    console.log("Database already has cards and scores; skipping to preserve data.");
+    console.log(
+      "Database already has cards and scores; skipping to preserve data.",
+    );
   }
 
   await knexInstance.destroy();

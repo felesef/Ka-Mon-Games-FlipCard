@@ -5,35 +5,34 @@ Also, create more global styles for common elements (typography or animations, e
 */
 /* → Fix will be applied in the next PR. */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 :root {
   --border: #422924e2;
   --highlight: #ffd895;
   --radius: 16px;
   --gap: 12px;
+
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+
+  --container-width: 1000px;
 }
 
 body {
   display: flex;
   min-height: 100vh;
   margin: 0;
-  background: url("https://github.com/felesef/Ka-Mon-Games-FlipCard/blob/user-interface-imgs/background.png?raw=true")
-    center / cover no-repeat fixed;
-  padding-top: auto;
+  background: url("../../images/homepage/background.png") center / cover
+    no-repeat fixed;
 }
 
 .container {
   display: flex;
-  padding: 18px 28px 10px;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  max-width: 1000px;
-  margin: 0 auto;
   width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 18px var(--space-lg) 10px;
+  gap: var(--space-md);
 }

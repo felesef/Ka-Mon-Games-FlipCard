@@ -3,13 +3,13 @@
   width: 100%;
   justify-content: space-between;
   flex-wrap: wrap;
-  background: #422924e2;
-  border-radius: 16px;
+  background: var(--border);
+  border-radius: var(--radius);
 }
 
 .stats-container .status-label,
 .stats-container .status-value {
-  color: #ffd895;
+  color: var(--highlight);
   background: transparent;
 }
 
@@ -22,9 +22,9 @@
 .status-value,
 .status-label {
   font-size: 18px;
-  color: #ffd895;
+  color: var(--highlight);
   margin: 10px;
   padding: 10px 20px;
-  background-color: #422924e2;
+  background-color: var(--border);
   border-radius: 25px;
 }
